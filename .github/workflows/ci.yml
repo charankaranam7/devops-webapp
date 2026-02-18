@@ -1,3 +1,9 @@
+
+
+
+
+
+
 name: CI Pipeline
 
 on:
@@ -18,4 +24,11 @@ jobs:
 
       - name: Build Step
         run: echo "Build Successful!"
+
+      - name: Send Slack Notification
+        if: always()
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+          --data '{"text":"GitHub Actions Build Completed!"}' \
+          ${{ secrets.SLACK_WEBHOOK_URL }}
 
